@@ -10,3 +10,4 @@ class gameObject {
       this.color = color
     }
 }
+
