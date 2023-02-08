@@ -14,7 +14,6 @@ class Asteroid extends gameObject {
     }
 
     intersects() {
-        
-    }
 
+    }
 }
