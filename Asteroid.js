@@ -1,13 +1,22 @@
 class Asteroid extends gameObject {
-    constructor(x, y, r) {
-    super(x, y, r, xSpeed, ySpeed, isActive, sprite, color)
-    this.x = x
-    this.y = y
-    this.r = r
-    this.xSpeed = xSpeed
-    this.ySpeed = ySpeed
-    this.isActive = isActive
-    this.sprite = sprite
-    this.color = color
+    constructor(x, y, r, sprite = null) {
+      super(x, y, r, 0, 5, true, sprite, "green")
     }
-}
+  
+    move() {
+      this.x = this.x
+      this.y = this.y + 1
+    }
+  
+    display() {
+      imageMode(CENTER);
+      image(this.sprite, this.x, this.y, this.r , this.r);
+
+      
+    }
+  
+    intersects() {
+      
+    }
+  
+  }
