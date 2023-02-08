@@ -14,13 +14,13 @@ function preload() {
 
 function setup() {
   createCanvas(windowWidth, windowHeight);
-  player = new Player(mouseX, 100, 100, images.spaceship)
+  player = new Player(mouseX, 75, 75, images.spaceship)
 }
 
 function draw() {
   background(0);
   // Opgave 3.1.4 - background
-  imageMode(LEFT)
+  imageMode(CORNER)
   image(images.background, 0, 0, windowWidth, windowHeight)
 
   player.move()

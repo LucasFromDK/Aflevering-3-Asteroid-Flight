@@ -1,5 +1,5 @@
 class gameObject {
-    constructor(x, y, r, xSpeed, ySpeed, isActive, sprite, color) {
+    constructor(x, y, r, xSpeed, ySpeed, isActive, sprite, color = "white") {
       this.x = x
       this.y = y
       this.r = r
@@ -9,5 +9,8 @@ class gameObject {
       this.sprite = sprite
       this.color = color
     }
-}
+    
+    intersects() {
 
+    }
+}

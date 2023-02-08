@@ -1,42 +1,20 @@
 class Player extends gameObject {
-    constructor(x, y, r, sprite = null) {
-    super(x,y,r,sprite)
-    }
-    get x() {
-        return this._x
-      }
-      set x(x) {
-        this._x = x
-      }
+  constructor(x, y, r, sprite = null) {
+    super(x, y, r, 0, 0, true, sprite, "green")
+  }
+
+  move() {
+    this.x = mouseX
+    this.y = this.y
+  }
+
+  display() {
+    imageMode(CENTER);
+    image(this.sprite, mouseX, height-50, this.r , this.r);
+  }
+
+  intersects() {
     
-      get y() {
-        return this._y
-      }
-      set y(y) {
-        this._y = y
-      }
-      
-      get r() {
-        return this._r
-      }
-      set r(r) {
-        this._r = r
-      }
+  }
 
-      get sprite() {
-        return this._sprite
-      }
-      set sprite(sprite) {
-        this._sprite = sprite
-      }
-
-      move() {
-        this.x = mouseX
-        this.y = this.y
-      }
-
-      display() {
-        imageMode(CENTER);
-        image(this.sprite, this.x, this.y, this.r);
-      }
 }
