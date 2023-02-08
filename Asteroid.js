@@ -5,18 +5,16 @@ class Asteroid extends gameObject {
   
     move() {
       this.x = this.x
-      this.y = this.y + 1
+      this.y = this.y + 3
     }
   
     display() {
       imageMode(CENTER);
       image(this.sprite, this.x, this.y, this.r , this.r);
+    }
 
-      
-    }
-  
     intersects() {
-      
+        
     }
-  
-  }
+
+}
