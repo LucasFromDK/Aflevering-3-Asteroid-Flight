@@ -14,7 +14,7 @@ function preload() {
 
 function setup() {
   createCanvas(windowWidth, windowHeight);
-  new Player(10, 10, 100, images.spaceship)
+  player = new Player(mouseX, 100, 100, images.spaceship)
 }
 
 function draw() {
@@ -22,6 +22,9 @@ function draw() {
   // Opgave 3.1.4 - background
   imageMode(LEFT)
   image(images.background, 0, 0, windowWidth, windowHeight)
+
+  player.move()
+  player.display()
 
   // Opgave 3.5.2 "is game over?"
   //if( ... ) {

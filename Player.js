@@ -32,6 +32,11 @@ class Player extends gameObject {
 
       move() {
         this.x = mouseX
-        console.log("Move")
+        this.y = this.y
+      }
+
+      display() {
+        imageMode(CENTER);
+        image(this.sprite, this.x, this.y, this.r);
       }
 }
