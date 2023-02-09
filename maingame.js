@@ -28,6 +28,8 @@ function draw() {
   imageMode(CORNER)
   image(images.background, 0, 0, windowWidth, windowHeight)
 
+  //Stopper med at tegne spilleren, asteroiderne og mønterne hvis spillet er slut.
+  if (gameOver == false) {
   for (let i = asteroids.length; i < 5; i++) {
     let x = random(50, 200)*i;
     asteroids.push(new Asteroid(x*2*i, 0, 100, images.asteroid));
@@ -48,15 +50,6 @@ function draw() {
     coin.move();
   }
 
-  //Tjekker om asteroiden rammer spilleren
-  for (let asteroid of asteroids) {
-    if (player.intersects(asteroid)) {
-      console.log("Spaceship Hit!")
-      gameOver = true;
-      break;
-    }
-  }
-
   for (let coin of coins) {
     if (player.collision(coin)) {
         console.log("Coin Grabed!")
@@ -65,21 +58,27 @@ function draw() {
       }
     }
   
-  player.move()
-  player.display()
+    player.move()
+    player.display()
+
 
   // Opgave 3.5.2 "is game over?"
-  //if( ... ) {
-    
-    // ...
-    // ...
+  if(gameOver == false) {
+  //Tjekker om asteroiden rammer spilleren.
+  for (let asteroid of asteroids) {
+    if (player.intersects(asteroid)) {
+    console.log("Spaceship Hit! Game Over")
+    gameOver = true;
+    break;
+      }
+    }
     
     tickObjects()
     tickSpawning()
     tickScore()
     tickDifficulty()
-  //}
-  
+  }
+  }
   //Opgave 3.4.4 drawUI
   drawUI()
 }
