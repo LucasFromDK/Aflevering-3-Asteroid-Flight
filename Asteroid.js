@@ -12,8 +12,4 @@ class Asteroid extends gameObject {
       imageMode(CENTER);
       image(this.sprite, this.x, this.y, this.r , this.r);
     }
-
-    intersects() {
-
-    }
 }

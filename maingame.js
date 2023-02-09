@@ -5,6 +5,7 @@ let gameOver = false
 
 let images = []
 let asteroids = []
+let coins = []
 
 function preload() {
   images.coin = loadImage("resources/coin.png")
@@ -15,12 +16,18 @@ function preload() {
 
 function setup() {
   createCanvas(windowWidth, windowHeight);
-  player = new Player(mouseX, 75, 75, images.spaceship)
+  player = new Player(mouseX, height-50, 75, images.spaceship)
 
-  //5 is a test value
+  //Test Segment, spawner 5 asteroider
   for (let i = 0; i < 5; i++) {
     let x = random(50, 200)*i;
     asteroids.push(new Asteroid(x*2*i, 0, 100, images.asteroid));
+  }
+
+  //Test, 5 coins
+  for (let i = 0; i < 5; i++) {
+    let x = random(50, 200)*i;
+    coins.push(new Coin(x*2*i, 0, 30, images.coin));
   }
 }
 
@@ -35,6 +42,28 @@ function draw() {
     asteroid.move();
   }
 
+  for (let coin of coins) {
+    coin.display();
+    coin.move();
+  }
+
+  //Tjekker om asteroiden rammer spilleren
+  for (let asteroid of asteroids) {
+    if (player.intersects(asteroid)) {
+      console.log("Spaceship Hit!")
+      gameOver = true;
+      break;
+    }
+  }
+
+  for (let coin of coins) {
+    if (player.collision(coin)) {
+        console.log("Coin Grabed!")
+        score = score + 5
+        break;
+      }
+    }
+  
   player.move()
   player.display()
 
@@ -51,8 +80,7 @@ function draw() {
   //}
   
   //Opgave 3.4.4 drawUI
-  // ...
-  // ...
+  drawUI()
 }
 
   
@@ -66,6 +94,9 @@ function tickDifficulty() {
 }
 
 function drawUI() {
+  fill("white")
+  strokeWeight(2)
+  text("Score: " + score, 5, 20)
 }
 
 function tickObjects() {
