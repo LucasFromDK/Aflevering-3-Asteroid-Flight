@@ -7,6 +7,9 @@ let images = []
 let asteroids = []
 let coins = []
 
+let scoreTick = 2500
+let difficultyTick = 5000
+
 function preload() {
   images.coin = loadImage("resources/coin.png")
   images.asteroid = loadImage("resources/asteroid.png")
@@ -17,18 +20,6 @@ function preload() {
 function setup() {
   createCanvas(windowWidth, windowHeight);
   player = new Player(mouseX, height-50, 75, images.spaceship)
-
-  //Test Segment, spawner 5 asteroider
-  for (let i = 0; i < 5; i++) {
-    let x = random(50, 200)*i;
-    asteroids.push(new Asteroid(x*2*i, 0, 100, images.asteroid));
-  }
-
-  //Test, 5 coins
-  for (let i = 0; i < 5; i++) {
-    let x = random(50, 200)*i;
-    coins.push(new Coin(x*2*i, 0, 30, images.coin));
-  }
 }
 
 function draw() {
@@ -36,6 +27,16 @@ function draw() {
   // Opgave 3.1.4 - background
   imageMode(CORNER)
   image(images.background, 0, 0, windowWidth, windowHeight)
+
+  for (let i = asteroids.length; i < 5; i++) {
+    let x = random(50, 200)*i;
+    asteroids.push(new Asteroid(x*2*i, 0, 100, images.asteroid));
+  }
+
+  for (let i = coins.length; i < 5; i++) {
+    let x = random(50, 200)*i;
+    coins.push(new Coin(x*2*i, 0, 30, images.coin));
+  }
 
   for (let asteroid of asteroids) {
     asteroid.display();
@@ -86,17 +87,37 @@ function draw() {
   
 function spliceAll(array, splices) {
 }
-  
+
 function tickScore() {
+  if(millis() > scoreTick && gameOver == false){
+    score++
+    scoreTick = scoreTick + 2500
+  } 
 }
 
 function tickDifficulty() {
+  if(millis() > difficultyTick && gameOver == false) {
+    difficulty++
+    difficultyTick = difficultyTick + 5000
+  }
 }
 
 function drawUI() {
-  fill("white")
-  strokeWeight(2)
-  text("Score: " + score, 5, 20)
+  if (gameOver == false) {
+    fill("white")
+    strokeWeight(2)
+    text("Score: " + score, 5, 20)
+  } else {
+    textAlign(CENTER)
+    fill("red")
+    textSize(48)
+    text("Game Over", width/2, height/2)
+
+    //Jeg har valgt at vise spillerens "Final Score" under Game Over for at man tydeligt kan se sin slut score
+    fill("white")
+    textSize(24)
+    text("Final Score: " + score, width/2, height/2+50)
+  }
 }
 
 function tickObjects() {
