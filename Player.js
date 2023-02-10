@@ -12,6 +12,4 @@ class Player extends gameObject {
     imageMode(CENTER);
     image(this.sprite, mouseX, this.y, this.r , this.r);
   }
-
-  //Tjekker om dit Rumskib bliver ramt af en Asteroide
 }

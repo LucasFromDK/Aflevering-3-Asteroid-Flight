@@ -4,9 +4,7 @@ let score = 0
 let gameOver = false
 
 let images = []
-let asteroids = []
-let coins = []
-
+let objects = []
 let scoreTick = 2500
 let difficultyTick = 5000
 let coinSpawnTick = 2000
@@ -22,7 +20,9 @@ function preload() {
 
 function setup() {
   createCanvas(windowWidth, windowHeight);
-  player = new Player(mouseX, height-50, 75, images.spaceship)
+  //Initialiserer Spilleren
+  player = new Player(width/2, height-50, 20, images.spaceship)
+  console.log("Lavet af Lucas L")
 }
 
 function draw() {
@@ -51,6 +51,9 @@ function draw() {
 
   
 function spliceAll(array, splices) {
+  for (let i = splices.length - 1; i >= 0; i--) {
+    array.splice(splices[i], 1)
+  }
 }
 
 function tickScore() {
@@ -72,64 +75,67 @@ function drawUI() {
     fill("white")
     strokeWeight(2)
     text("Score: " + score, 5, 20)
+    text("Difficulty: " + difficulty, 5, 35)
   } else {
     textAlign(CENTER)
     fill("red")
     textSize(48)
     text("Game Over", width/2, height/2)
 
-    //Jeg har valgt at vise spillerens "Final Score" under Game Over for at man tydeligt kan se sin slut score
+    //Jeg har valgt at vise spillerens "Final Score" og "Difficulty Reached" under Game Over for at man tydeligt kan se sin slut score
     fill("white")
     textSize(24)
-    text("Final Score: " + score, width/2, height/2+50)
+    text("Final Score: " + score, width/2, height/2+30)
+    text("Difficulty Reached: " + difficulty, width/2, height/2+60)
   }
 }
 
 function tickObjects() {
+  let nonActiveObjects = []
 
-//Tjekker om spilleren samler coins op.
-  for (let coin of coins) {
-    if (coin.collision(player) && coin.isActive == true) {
-        console.log("Coin Grabed!")
-        coin.isActive = false
-        score = score + 5
-        break;
-      }
+  // Check if player collects a coin.
+  for (let object of objects) {
+    if (object instanceof Coin && object.collision(player) && object.isActive == true) {
+      console.log("Coin Grabbed!");
+      object.isActive = false;
+      score = score + 5;
+      break;
     }
 
-  //Tegner Coins
-  for (let coin of coins) {
-    if (coin.isActive == true)
-    coin.display();
-    coin.move();
+    // Check if player is hit by an asteroid.
+    if (object instanceof Asteroid && object.intersects(player)) {
+      console.log("Spaceship Hit! Game Over");
+      gameOver = true;
+      break;
     }
 
-  //Tjekker om asteroiden rammer spilleren.
-  for (let asteroid of asteroids) {
-    if (asteroid.intersects(player)) {
-    console.log("Spaceship Hit! Game Over")
-    gameOver = true;
-    break;
-      }
+    if (object.isActive == false) {
+      nonActiveObjects.push(object)
     }
+  }
 
-  //Tegner Asteroiderne
-  for (let asteroid of asteroids) {
-    asteroid.display();
-    asteroid.move();
+  //
+  spliceAll(objects, nonActiveObjects)
+
+  //Tegner Objecter.
+  for (let object of objects) {
+    object.display();
+    object.move();
   }
 }
 
+
 function spawnNewObject(type) {
   if (type == "asteroid") {
+    //"Laver" nye asteroider
     for (let i = 0; i < difficulty; i++ ) {
-      asteroids.push(new Asteroid(random(50, width-50), 0, random(75,159), images.asteroid))
-      console.log("Spawned Asteroids! ")
+      objects.push(new Asteroid(random(50, width-50), 0, random(75,159), images.asteroid));
+      console.log("Spawned Asteroids! ");
     }
-
   } else if (type == "coin") {
-    coins.push(new Coin(random(50, width-50), 0, random(25, 35), images.coin))
-    console.log("Spawned Coin!")
+    //"Laver" nye mønter.
+    objects.push(new Coin(random(50, width-50), 0, random(25, 35), images.coin));
+    console.log("Spawned Coin!");
   }
 }
 
