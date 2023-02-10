@@ -1,6 +1,6 @@
 class Asteroid extends gameObject {
     constructor(x, y, r, sprite = null) {
-      super(x, y, r, 0, 5, true, sprite, "green")
+      super(x, y, r, 0, 5, true, sprite, "red")
     }
   
     move() {
