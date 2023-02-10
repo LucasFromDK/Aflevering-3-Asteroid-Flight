@@ -30,14 +30,14 @@ function draw() {
 
   //Stopper med at tegne spilleren, asteroiderne og mønterne hvis spillet er slut.
   if (gameOver == false) {
-  for (let i = asteroids.length; i < 5; i++) {
+  for (let i = asteroids.length; i < 0; i++) {
     let x = random(50, 200)*i;
     asteroids.push(new Asteroid(x*2*i, 0, 100, images.asteroid));
   }
 
-  for (let i = coins.length; i < 5; i++) {
-    let x = random(50, 200)*i;
-    coins.push(new Coin(x*2*i, 0, 30, images.coin));
+  for (let i = coins.length; i < 50; i++) {
+    let x = random(50, width-30);
+    coins.push(new Coin(x, 0, 30, images.coin));
   }
 
   for (let asteroid of asteroids) {
@@ -46,13 +46,15 @@ function draw() {
   }
 
   for (let coin of coins) {
+    if (coin.isActive == true)
     coin.display();
     coin.move();
   }
 
   for (let coin of coins) {
-    if (coin.collision(player)) {
+    if (coin.collision(player) && coin.isActive == true) {
         console.log("Coin Grabed!")
+        coin.isActive = false
         score = score + 5
         break;
       }

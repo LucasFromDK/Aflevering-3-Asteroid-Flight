@@ -9,8 +9,4 @@ class gameObject {
       this.sprite = sprite
       this.color = color
     }
-    
-    intersects() {
-
-    }
 }
