@@ -12,4 +12,9 @@ class Coin extends gameObject {
       imageMode(CENTER);
       image(this.sprite, this.x, this.y, this.r , this.r);
     }
+
+    collision(player) {
+      let distance = dist(this.x, this.y, player.x, player.y);
+      return distance < this.r / 2 + player.r / 2;
+    }
 }

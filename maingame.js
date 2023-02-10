@@ -51,7 +51,7 @@ function draw() {
   }
 
   for (let coin of coins) {
-    if (player.collision(coin)) {
+    if (coin.collision(player)) {
         console.log("Coin Grabed!")
         score = score + 5
         break;
@@ -66,7 +66,7 @@ function draw() {
   if(gameOver == false) {
   //Tjekker om asteroiden rammer spilleren.
   for (let asteroid of asteroids) {
-    if (player.intersects(asteroid)) {
+    if (asteroid.intersects(player)) {
     console.log("Spaceship Hit! Game Over")
     gameOver = true;
     break;
